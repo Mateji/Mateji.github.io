@@ -308,6 +308,9 @@ var AuthService = /** @class */ (function () {
         var token = this.getToken();
         return Object(__WEBPACK_IMPORTED_MODULE_2_angular2_jwt__["tokenNotExpired"])(null, token);
     };
+    AuthService.prototype.isGroup = function (group) {
+        return this.globalDataService.userGroup === group;
+    };
     AuthService.prototype.login = function (name, password) {
         var _this = this;
         return this.http.post(this.authUrl, { name: name, password: password })
@@ -317,6 +320,7 @@ var AuthService = /** @class */ (function () {
                 var token = data['token'];
                 if (token) {
                     localStorage.setItem('token', token);
+                    _this.globalDataService.userGroup = data['group'];
                     _this.globalDataService.userName = data['name'];
                     return true;
                 }
@@ -325,6 +329,7 @@ var AuthService = /** @class */ (function () {
         });
     };
     AuthService.prototype.logout = function () {
+        this.globalDataService.clearDataService();
         localStorage.removeItem('token');
     };
     AuthService = __decorate([
@@ -355,6 +360,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var GlobalDataService = /** @class */ (function () {
     function GlobalDataService() {
     }
+    GlobalDataService.prototype.clearDataService = function () {
+        this.userName = '';
+        this.userGroup = '';
+    };
     GlobalDataService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])()
     ], GlobalDataService);
@@ -738,7 +747,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".loading-spinner,\r\n.loading-spinner:after {\r\n  border-radius: 50%;\r\n  width: 10em;\r\n  height: 10em;\r\n}\r\n.loading-spinner {\r\n  margin: 60px auto;\r\n  font-size: 10px;\r\n  position: relative;\r\n  text-indent: -9999em;\r\n  border-top: 1.1em solid rgba(255, 255, 255, 0.2);\r\n  border-right: 1.1em solid rgba(255, 255, 255, 0.2);\r\n  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);\r\n  border-left: 1.1em solid #ffffff;\r\n  -webkit-transform: translateZ(0);\r\n  transform: translateZ(0);\r\n  -webkit-animation: load8 1.1s infinite linear;\r\n  animation: load8 1.1s infinite linear;\r\n}\r\n@-webkit-keyframes load8 {\r\n  0% {\r\n    -webkit-transform: rotate(0deg);\r\n    transform: rotate(0deg);\r\n  }\r\n  100% {\r\n    -webkit-transform: rotate(360deg);\r\n    transform: rotate(360deg);\r\n  }\r\n}\r\n@keyframes load8 {\r\n  0% {\r\n    -webkit-transform: rotate(0deg);\r\n    transform: rotate(0deg);\r\n  }\r\n  100% {\r\n    -webkit-transform: rotate(360deg);\r\n    transform: rotate(360deg);\r\n  }\r\n}", ""]);
+exports.push([module.i, ".loading-wrapper {\r\n  background: rgba(255,132,32,0.8);\r\n  position: fixed;\r\n  top: 52px;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  -webkit-box-align: center;\r\n      -ms-flex-align: center;\r\n          align-items: center;\r\n  -webkit-box-pack: center;\r\n      -ms-flex-pack: center;\r\n          justify-content: center;\r\n}\r\n\r\n\r\n.sk-cube-grid {\r\n  width: 40px;\r\n  height: 40px;\r\n  margin: 100px auto;\r\n}\r\n\r\n.sk-cube-grid .sk-cube {\r\n  width: 33%;\r\n  height: 33%;\r\n  background-color: #333;\r\n  float: left;\r\n  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;\r\n          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; \r\n}\r\n.sk-cube-grid .sk-cube1 {\r\n  -webkit-animation-delay: 0.2s;\r\n          animation-delay: 0.2s; }\r\n.sk-cube-grid .sk-cube2 {\r\n  -webkit-animation-delay: 0.3s;\r\n          animation-delay: 0.3s; }\r\n.sk-cube-grid .sk-cube3 {\r\n  -webkit-animation-delay: 0.4s;\r\n          animation-delay: 0.4s; }\r\n.sk-cube-grid .sk-cube4 {\r\n  -webkit-animation-delay: 0.1s;\r\n          animation-delay: 0.1s; }\r\n.sk-cube-grid .sk-cube5 {\r\n  -webkit-animation-delay: 0.2s;\r\n          animation-delay: 0.2s; }\r\n.sk-cube-grid .sk-cube6 {\r\n  -webkit-animation-delay: 0.3s;\r\n          animation-delay: 0.3s; }\r\n.sk-cube-grid .sk-cube7 {\r\n  -webkit-animation-delay: 0s;\r\n          animation-delay: 0s; }\r\n.sk-cube-grid .sk-cube8 {\r\n  -webkit-animation-delay: 0.1s;\r\n          animation-delay: 0.1s; }\r\n.sk-cube-grid .sk-cube9 {\r\n  -webkit-animation-delay: 0.2s;\r\n          animation-delay: 0.2s; }\r\n\r\n@-webkit-keyframes sk-cubeGridScaleDelay {\r\n  0%, 70%, 100% {\r\n    -webkit-transform: scale3D(1, 1, 1);\r\n            transform: scale3D(1, 1, 1);\r\n  } 35% {\r\n    -webkit-transform: scale3D(0, 0, 1);\r\n            transform: scale3D(0, 0, 1); \r\n  }\r\n}\r\n\r\n@keyframes sk-cubeGridScaleDelay {\r\n  0%, 70%, 100% {\r\n    -webkit-transform: scale3D(1, 1, 1);\r\n            transform: scale3D(1, 1, 1);\r\n  } 35% {\r\n    -webkit-transform: scale3D(0, 0, 1);\r\n            transform: scale3D(0, 0, 1);\r\n  } \r\n}", ""]);
 
 // exports
 
@@ -751,7 +760,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"section\">\r\n  <div class=\"container\">\r\n    <div class=\"columns\">\r\n      <div class=\"column is-three-fifths is-offset-one-fifth box\">\r\n        <form #loginForm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\r\n          <div class=\"field\">\r\n            <label for=\"name\">Name</label>\r\n            <div class=\"control\">\r\n              <input type=\"text\" class=\"input\" placeholder=\"Name\" id=\"name\" required [(ngModel)]=\"model.name\" name=\"name\" [class.is-danger]=\"error\">\r\n            </div>\r\n          </div>\r\n          <div class=\"field\">\r\n            <label for=\"password\">Password</label>\r\n            <div class=\"control\">\r\n              <input type=\"password\" class=\"input\" placeholder=\"Password\" id=\"password\" required [(ngModel)]=\"model.password\" name=\"password\" [class.is-danger]=\"error\">\r\n            </div>\r\n          </div>\r\n\r\n          <div *ngIf=\"error\" class=\"notification is-danger\">{{error}}</div>\r\n\r\n          <div class=\"field is-grouped\">\r\n            <div class=\"control\">\r\n              <button [disabled]=\"loading\" type=\"submit\" class=\"button is-link\">Submit</button>\r\n            </div>\r\n            <div class=\"control\">\r\n              <button class=\"button is-text\" type=\"reset\">Cancel</button>\r\n            </div>\r\n          </div>\r\n          <div *ngIf=\"loading\" class=\"loading-spinner\"></div>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>"
+module.exports = "<section class=\"section\">\r\n  <div class=\"container\">\r\n    <div class=\"columns\">\r\n      <div class=\"column is-three-fifths is-offset-one-fifth box\">\r\n        <form #loginForm=\"ngForm\" (ngSubmit)=\"onSubmit()\">\r\n          <div class=\"field\">\r\n            <label for=\"name\">Name</label>\r\n            <div class=\"control\">\r\n              <input type=\"text\" class=\"input\" placeholder=\"Name\" id=\"name\" required [(ngModel)]=\"model.name\" name=\"name\" [class.is-danger]=\"error\">\r\n            </div>\r\n          </div>\r\n          <div class=\"field\">\r\n            <label for=\"password\">Password</label>\r\n            <div class=\"control\">\r\n              <input type=\"password\" class=\"input\" placeholder=\"Password\" id=\"password\" required [(ngModel)]=\"model.password\" name=\"password\"\r\n                [class.is-danger]=\"error\">\r\n            </div>\r\n          </div>\r\n\r\n          <div *ngIf=\"error\" class=\"notification is-danger\">{{error}}</div>\r\n\r\n          <div class=\"field is-grouped\">\r\n            <div class=\"control\">\r\n              <button [disabled]=\"loading\" type=\"submit\" class=\"button is-link\">Submit</button>\r\n            </div>\r\n            <div class=\"control\">\r\n              <button class=\"button is-text\" type=\"reset\">Cancel</button>\r\n            </div>\r\n          </div>\r\n          <div *ngIf=\"loading\" class=\"loading-wrapper\">\r\n            <div class=\"sk-cube-grid\">\r\n              <div class=\"sk-cube sk-cube1\"></div>\r\n              <div class=\"sk-cube sk-cube2\"></div>\r\n              <div class=\"sk-cube sk-cube3\"></div>\r\n              <div class=\"sk-cube sk-cube4\"></div>\r\n              <div class=\"sk-cube sk-cube5\"></div>\r\n              <div class=\"sk-cube sk-cube6\"></div>\r\n              <div class=\"sk-cube sk-cube7\"></div>\r\n              <div class=\"sk-cube sk-cube8\"></div>\r\n              <div class=\"sk-cube sk-cube9\"></div>\r\n            </div>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>"
 
 /***/ }),
 
